@@ -7,4 +7,5 @@
     <string name="count_error">Count error</string>
     <string name="goods">Goods</string>
     <string name="default_quantity">3</string>
+    <string name="add_element">Add element</string>
 </resources>
