@@ -3,7 +3,7 @@ package com.example.shoplist.presentation
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.example.shoplist.data.RepositoryImpl
+import com.example.shoplist.data.RepositoryImpl  // FIXME: presentation layer has to be independent on data layer
 import com.example.shoplist.databinding.ActivityMainBinding
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.usecases.AddItemUseCase
