@@ -6,7 +6,7 @@ import com.example.shoplist.domain.ShopItem
 class ToggleEnabledUseCase(
     private val repository: Repository
 ) {
-    fun toggleEnabled(item: ShopItem) {
+    operator fun invoke(item: ShopItem) {
         repository.toggleEnabled(item)
     }
 }

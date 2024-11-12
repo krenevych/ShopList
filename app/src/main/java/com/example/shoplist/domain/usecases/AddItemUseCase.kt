@@ -6,7 +6,7 @@ import com.example.shoplist.domain.ShopItem
 class AddItemUseCase(
     private val repository: Repository
 ) {
-    fun addItem(item: ShopItem) {
+    operator fun invoke(item: ShopItem) {
         repository.addItem(item)
     }
 }

@@ -6,7 +6,7 @@ import com.example.shoplist.domain.ShopItem
 class ChangeItemUseCase(
     private val repository: Repository
 ) {
-    fun changeItem(item: ShopItem) {
+    operator fun invoke(item: ShopItem) {
         repository.changeItem(item)
     }
 }

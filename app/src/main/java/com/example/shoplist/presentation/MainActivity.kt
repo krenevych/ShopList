@@ -32,14 +32,14 @@ class MainActivity : AppCompatActivity() {
 
         val bread = ShopItem("Bread", 4)
 
-        Log.d(TAG, "getItemUseCase: ${getItemUseCase.getItems()}")
-        addItemUseCase.addItem(bread)
-        addItemUseCase.addItem(ShopItem("Bear", 2))
-        Log.d(TAG, "getItemUseCase: ${getItemUseCase.getItems()}")
-        toggleEnabledUseCase.toggleEnabled(bread)
-        Log.d(TAG, "getItemUseCase: ${getItemUseCase.getItems()}")
-        removeItemUseCase.removeItem(bread)
-        Log.d(TAG, "getItemUseCase: ${getItemUseCase.getItems()}")
+        Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
+        addItemUseCase(bread)
+        addItemUseCase(ShopItem("Bear", 2))
+        Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
+        toggleEnabledUseCase(bread)
+        Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
+        removeItemUseCase(bread)
+        Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
 
     }
 }
