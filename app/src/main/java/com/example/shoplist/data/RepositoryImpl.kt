@@ -15,9 +15,12 @@ object RepositoryImpl : Repository {
         get() = _itemsLiveData
 
     init {
-        for (i in 1..10) {
+        for (i in 1..4) {
             addItem(ShopItem("Item_$i", i))
         }
+
+        addItem(ShopItem("Item_$100", 40, false))
+        addItem(ShopItem("Item_$100", 40, false))
     }
 
     private fun update() {

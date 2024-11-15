@@ -38,13 +38,27 @@ class ShopItemsAdapter() :
         val count = view.findViewById<TextView>(R.id.textViewCount)
     }
 
+    val ITEM_ENADBED = 1
+    val ITEM_DISNADBED = 2
+
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.shop_item, viewGroup, false)
+        val view =
+            if (viewType == ITEM_DISNADBED){
+                LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.shop_item_disabled, viewGroup, false)
+            } else {  // ITEM_ENADBED
+                LayoutInflater.from(viewGroup.context)
+                    .inflate(R.layout.shop_item, viewGroup, false)
+            }
 
         return ViewHolder(view)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        val type = if (items[position].isActive) ITEM_ENADBED else ITEM_DISNADBED
+        return type
     }
 
     // Replace the contents of a view (invoked by the layout manager)
