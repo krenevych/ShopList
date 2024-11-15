@@ -7,7 +7,6 @@ import com.example.shoplist.data.RepositoryImpl  // FIXME: presentation layer ha
 import com.example.shoplist.databinding.ActivityMainBinding
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.usecases.AddItemUseCase
-import com.example.shoplist.domain.usecases.ToggleEnabledUseCase
 import com.example.shoplist.domain.usecases.GetItemsUseCase
 import com.example.shoplist.domain.usecases.RemoveItemUseCase
 
@@ -28,15 +27,12 @@ class MainActivity : AppCompatActivity() {
         val getItemUseCase = GetItemsUseCase(repository)
         val addItemUseCase = AddItemUseCase(repository)
         val removeItemUseCase = RemoveItemUseCase(repository)
-        val toggleEnabledUseCase = ToggleEnabledUseCase(repository)
 
         val bread = ShopItem("Bread", 4)
 
         Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
         addItemUseCase(bread)
         addItemUseCase(ShopItem("Bear", 2))
-        Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
-        toggleEnabledUseCase(bread)
         Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
         removeItemUseCase(bread)
         Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
