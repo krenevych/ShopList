@@ -1,5 +1,7 @@
 package com.example.shoplist.data
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
@@ -8,14 +10,18 @@ object RepositoryImpl : Repository {
 
     private val items: MutableList<ShopItem> = mutableListOf()
 
+    private val _itemsLiveData = MutableLiveData<List<ShopItem>>()
+    override val itemsLiveData: LiveData<List<ShopItem>>
+        get() = _itemsLiveData
+
     init {
         for (i in 1..3) {
             addItem(ShopItem("Item_$i", i))
         }
     }
 
-    override fun getItems(): List<ShopItem> {
-        return items.toList()  // Віддіємо САМЕ копію!
+    private fun update() {
+        _itemsLiveData.value = items.toList()
     }
 
     override fun addItem(item: ShopItem) {
@@ -23,6 +29,8 @@ object RepositoryImpl : Repository {
             item.id = current_id++
         }
         items.add(item)
+
+        update()
     }
 
     override fun removeItem(item: ShopItem) {
@@ -30,17 +38,8 @@ object RepositoryImpl : Repository {
             it.id == item.id
         }
         items.remove(itemToRemove)
-    }
 
-    override fun toggleEnabled(item: ShopItem) {
-        val itemToToggle = items.find {
-            it.id == item.id
-        }
-        itemToToggle ?: return
-
-        val newItem = itemToToggle.copy(isActive = !itemToToggle.isActive)
-        removeItem(itemToToggle)
-        addItem(newItem)
+        update()
     }
 
     override fun changeItem(item: ShopItem) {
@@ -48,7 +47,8 @@ object RepositoryImpl : Repository {
             it.id == item.id
         }
         itemToChange ?: return
-        removeItem(itemToChange)
+//        removeItem(itemToChange)  // To avoid extra call updating of live data
+        items.remove(itemToChange)
         addItem(item)
     }
 

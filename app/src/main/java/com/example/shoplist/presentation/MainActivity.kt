@@ -22,13 +22,14 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        val items = viewModel.getItems()
-        Log.d(TAG, "getItemUseCase: $items")
+        viewModel.itemsLiveData.observe(this) {
+            // Calls each time, when data is changed
+            Log.d(TAG, "getItemUseCase: $it")
+        }
+
 
         binding.addBtn.setOnClickListener {
             viewModel.addItem(ShopItem("Bread", 4))
-            val items1 = viewModel.getItems()
-            Log.d(TAG, "getItemUseCase: $items1")
         }
 
     }

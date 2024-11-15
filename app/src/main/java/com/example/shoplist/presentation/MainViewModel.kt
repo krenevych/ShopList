@@ -12,22 +12,15 @@ class MainViewModel: ViewModel() {
 
     private val repository = RepositoryImpl
 
-
     private val getItemUseCase = GetItemsUseCase(repository)
     private val addItemUseCase = AddItemUseCase(repository)
     private val removeItemUseCase = RemoveItemUseCase(repository)
     private val changeItemUseCase = ChangeItemUseCase(repository)
 
-    fun getItems() = getItemUseCase()
-    fun addItem(shopItem: ShopItem) = addItemUseCase(shopItem)
+    val itemsLiveData
+        get() = getItemUseCase()
 
-//    val bread = ShopItem("Bread", 4)
-//    Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
-//    addItemUseCase(bread)
-//    addItemUseCase(ShopItem("Bear", 2))
-//    Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
-//    removeItemUseCase(bread)
-//    Log.d(TAG, "getItemUseCase: ${getItemUseCase()}")
+    fun addItem(shopItem: ShopItem) = addItemUseCase(shopItem)
 
 
 }
