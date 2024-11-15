@@ -15,7 +15,7 @@ object RepositoryImpl : Repository {
         get() = _itemsLiveData
 
     init {
-        for (i in 1..3) {
+        for (i in 1..10) {
             addItem(ShopItem("Item_$i", i))
         }
     }
