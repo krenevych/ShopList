@@ -4,7 +4,7 @@ import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
 
-class RepositoryImpl : Repository {
+object RepositoryImpl : Repository {
 
     private val items: MutableList<ShopItem> = mutableListOf()
 
@@ -52,7 +52,6 @@ class RepositoryImpl : Repository {
         addItem(item)
     }
 
-    companion object {
-        var current_id = 0
-    }
+    private var current_id = 0
+
 }
