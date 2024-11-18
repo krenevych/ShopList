@@ -24,6 +24,10 @@ class MainViewModel(
         get() = getItemUseCase()
 
     fun addItem(shopItem: ShopItem) = addItemUseCase(shopItem)
+    fun toggleItem(shopItem: ShopItem) {
+        val newItem = shopItem.copy(isActive = !shopItem.isActive)
+        changeItemUseCase(newItem)
+    }
 
 
 }

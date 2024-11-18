@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
             override fun onLongClick(shopItem: ShopItem): Boolean {
                 Log.d(TAG, "onLongClick: $shopItem")
+                viewModel.toggleItem(shopItem)
                 return true
             }
 

@@ -8,7 +8,11 @@ import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
 
 object RepositoryImpl : Repository {
 
-    private val items: MutableList<ShopItem> = mutableListOf()
+//    private val items: MutableList<ShopItem> = mutableListOf()
+
+    private val items = sortedSetOf<ShopItem>({item1: ShopItem, item2:ShopItem ->
+        item1.id - item2.id
+    })
 
     private val _itemsLiveData = MutableLiveData<List<ShopItem>>()
     override val itemsLiveData: LiveData<List<ShopItem>>
