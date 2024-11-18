@@ -37,6 +37,8 @@ class ShopItemActivity : AppCompatActivity() {
         parseItemIntent(intent)
         Log.d(TAG, "parse intent: mode=$mode, id=$itemId")
 
+        setupLiveData()
+
         setupButtonSave()
 
     }
@@ -50,7 +52,7 @@ class ShopItemActivity : AppCompatActivity() {
             val count = parseCount(binding.editTextCount.text)
 
             if (mode == MODE_EDIT) {
-//                viewModel.editItem(ShopItem())
+                viewModel.editItem(name, count)
             } else { // mode == MODE_ADD
                 viewModel.addItem(name, count)
             }
@@ -81,6 +83,7 @@ class ShopItemActivity : AppCompatActivity() {
                         if (itemId == ShopItem.UNDEFINED_ID) {
                             throw IllegalArgumentException("Mode Edit, item Id isn't defined")
                         }
+                        viewModel.getItem(itemId)
                     } else {
                         throw IllegalArgumentException("Mode Edit, item Id isn't defined")
                     }
@@ -97,5 +100,13 @@ class ShopItemActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupLiveData() {
+        viewModel.itemLiveData.observe(this) {
+            with(binding) {
+                editTextName.setText(it.name)
+                editTextCount.setText(it.count.toString())
+            }
+        }
+    }
 
 }
