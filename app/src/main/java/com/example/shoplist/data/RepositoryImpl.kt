@@ -18,6 +18,12 @@ object RepositoryImpl : Repository {
     override val itemsLiveData: LiveData<List<ShopItem>>
         get() = _itemsLiveData
 
+    override fun getItem(id: Int): ShopItem {
+        return items.find {
+            it.id == id
+        } ?: throw IllegalStateException("Item $id isn't found")
+    }
+
     init {
         for (i in 1..4) {
             addItem(ShopItem("Item_$i", i))

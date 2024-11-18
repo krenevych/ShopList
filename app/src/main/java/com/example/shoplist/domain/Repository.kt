@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 
 interface Repository {
     // декларуємо, що ми будемо вміти робити з нашими даними
-    val itemsLiveData : LiveData<List<ShopItem>>
+    val itemsLiveData: LiveData<List<ShopItem>>
+    fun getItem(id: Int): ShopItem
     fun addItem(item: ShopItem)
     fun removeItem(item: ShopItem)
     fun changeItem(item: ShopItem)
+
 }
