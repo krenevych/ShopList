@@ -29,5 +29,9 @@ class MainViewModel(
         changeItemUseCase(newItem)
     }
 
+    fun removeItem(shopItem: ShopItem) {
+        removeItemUseCase(shopItem)
+    }
+
 
 }

@@ -6,10 +6,12 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.shoplist.data.RepositoryImpl
 import com.example.shoplist.databinding.ActivityMainBinding
 import com.example.shoplist.domain.ShopItem
+
 
 class MainActivity : AppCompatActivity() {
     private val TAG = "XXXX"
@@ -52,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         binding.shopItems.layoutManager = LinearLayoutManager(this)
         binding.shopItems.adapter = shopItemsAdapter
 
-        shopItemsAdapter.clickListener = object : ShopItemsAdapter.ClickListener {
+        shopItemsAdapter.itemsInteractionListener = object : ShopItemsAdapter.ItemsInteractionListener {
             override fun onClick(shopItem: ShopItem) {
                 Log.d(TAG, "onClick: $shopItem")
             }
@@ -63,7 +65,13 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
 
+            override fun onSwiped(shopItem: ShopItem) {
+                viewModel.removeItem(shopItem)
+            }
         }
+
+        val itemTouchHelper = ItemTouchHelper(shopItemsAdapter.simpleItemTouchCallback)
+        itemTouchHelper.attachToRecyclerView(binding.shopItems)
 
 
 

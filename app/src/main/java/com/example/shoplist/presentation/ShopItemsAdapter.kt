@@ -1,17 +1,22 @@
 package com.example.shoplist.presentation
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplist.R
 import com.example.shoplist.domain.ShopItem
 
+
 class ShopItemsAdapter() :
     RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
+
+    private val TAG = "XXXX"
 
     var items: List<ShopItem> = listOf()
         set(value) {
@@ -19,12 +24,13 @@ class ShopItemsAdapter() :
             notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
         }
 
-    interface ClickListener {
+    interface ItemsInteractionListener {
         fun onClick(shopItem: ShopItem)
         fun onLongClick(shopItem: ShopItem) : Boolean
+        fun onSwiped(shopItem: ShopItem)
     }
 
-    var clickListener: ClickListener? = null
+    var itemsInteractionListener: ItemsInteractionListener? = null
 
     /**
      * Provide a reference to the type of views that you are using
@@ -72,15 +78,43 @@ class ShopItemsAdapter() :
         viewHolder.name.text = shopItem.name
         viewHolder.count.text = shopItem.count.toString()
         viewHolder.cardView.setOnClickListener {
-            clickListener?.onClick(shopItem)
+            itemsInteractionListener?.onClick(shopItem)
         }
 
         viewHolder.cardView.setOnLongClickListener {
-            clickListener?.onLongClick(shopItem) ?: false
+            itemsInteractionListener?.onLongClick(shopItem) ?: false
         }
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = items.size
+
+    var simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
+        ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+//                    or ItemTouchHelper.DOWN or ItemTouchHelper.UP
+        ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder,
+        ): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, swipeDir: Int) {
+            //Remove swiped item from list and notify the RecyclerView
+            val position = viewHolder.adapterPosition
+            Log.d(TAG, "onSwiped: $position")
+            val shopItem = items[position]
+            itemsInteractionListener?.onSwiped(shopItem)
+
+            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
+
+//            arrayList.remove(position)
+//            adapter.notifyDataSetChanged()
+        }
+    }
 
 }
