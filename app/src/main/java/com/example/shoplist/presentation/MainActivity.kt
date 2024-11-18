@@ -1,5 +1,6 @@
 package com.example.shoplist.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
@@ -48,7 +49,10 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.addBtn.setOnClickListener {
-            viewModel.addItem(ShopItem("Bread", 4))
+//            viewModel.addItem(ShopItem("Bread", 4))
+
+            startShopItemActivityForAdd()
+
         }
 
         binding.shopItems.layoutManager = LinearLayoutManager(this)
@@ -77,5 +81,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
+    }
+
+    private fun startShopItemActivityForAdd() {
+        val intent = Intent(this, ShopItemActivity::class.java)
+        startActivity(intent)
     }
 }
