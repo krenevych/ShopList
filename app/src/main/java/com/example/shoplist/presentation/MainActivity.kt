@@ -61,6 +61,8 @@ class MainActivity : AppCompatActivity() {
         shopItemsAdapter.itemsInteractionListener = object : ShopItemsAdapter.ItemsInteractionListener {
             override fun onClick(shopItem: ShopItem) {
                 Log.d(TAG, "onClick: $shopItem")
+
+                startShopItemActivityForEdit(shopItem)
             }
 
             override fun onLongClick(shopItem: ShopItem): Boolean {
@@ -76,15 +78,20 @@ class MainActivity : AppCompatActivity() {
 
         val itemTouchHelper = ItemTouchHelper(shopItemsAdapter.simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(binding.shopItems)
+    }
 
-
-
-
-
+    private fun startShopItemActivityForEdit(shopItem: ShopItem) {
+        val intent = Intent(this, ShopItemActivity::class.java).apply {
+            putExtra(EXTRA_MODE, MODE_EDIT)
+            putExtra(EXTRA_ITEM_ID, shopItem.id)
+        }
+        startActivity(intent)
     }
 
     private fun startShopItemActivityForAdd() {
-        val intent = Intent(this, ShopItemActivity::class.java)
+        val intent = Intent(this, ShopItemActivity::class.java).apply {
+            putExtra(EXTRA_MODE, MODE_ADD)
+        }
         startActivity(intent)
     }
 }
