@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity() {
             // Calls each time, when data is changed
             Log.d(TAG, "getItemUseCase: $it")
 
-            shopItemsAdapter.items = it
+//            shopItemsAdapter.items = it
+            shopItemsAdapter.submitList(it)
         }
 
 

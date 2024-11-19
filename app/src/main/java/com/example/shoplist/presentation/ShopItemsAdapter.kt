@@ -8,21 +8,23 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shoplist.R
 import com.example.shoplist.domain.ShopItem
 
 
 class ShopItemsAdapter() :
-    RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
+//    RecyclerView.Adapter<ShopItemsAdapter.ViewHolder>() {
+        ListAdapter<ShopItem, ShopItemsAdapter.ViewHolder>(ShopItemDiffUtil()){
 
     private val TAG = "XXXX"
 
-    var items: List<ShopItem> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
-        }
+//    var items: List<ShopItem> = listOf()
+//        set(value) {
+//            field = value
+//            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
+//        }
 
     interface ItemsInteractionListener {
         fun onClick(shopItem: ShopItem)
@@ -63,7 +65,9 @@ class ShopItemsAdapter() :
     }
 
     override fun getItemViewType(position: Int): Int {
-        val type = if (items[position].isActive) ITEM_ENADBED else ITEM_DISNADBED
+//        val shopItem = items[position]
+        val shopItem = getItem(position)
+        val type = if (shopItem.isActive) ITEM_ENADBED else ITEM_DISNADBED
         return type
     }
 
@@ -74,7 +78,8 @@ class ShopItemsAdapter() :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
 
-        val shopItem = items[position]
+//        val shopItem = items[position]
+        val shopItem = getItem(position)
         viewHolder.name.text = shopItem.name
         viewHolder.count.text = shopItem.count.toString()
         viewHolder.cardView.setOnClickListener {
@@ -86,8 +91,8 @@ class ShopItemsAdapter() :
         }
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = items.size
+//    // Return the size of your dataset (invoked by the layout manager)
+//    override fun getItemCount() = items.size  // this method is provided by ListAdapter
 
     var simpleItemTouchCallback: ItemTouchHelper.SimpleCallback = object :
         ItemTouchHelper.SimpleCallback(
@@ -107,7 +112,8 @@ class ShopItemsAdapter() :
             //Remove swiped item from list and notify the RecyclerView
             val position = viewHolder.adapterPosition
             Log.d(TAG, "onSwiped: $position")
-            val shopItem = items[position]
+//            val shopItem = items[position]
+            val shopItem = getItem(position)
             itemsInteractionListener?.onSwiped(shopItem)
 
 //            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
