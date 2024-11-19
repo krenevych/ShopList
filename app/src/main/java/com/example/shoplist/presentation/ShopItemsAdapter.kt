@@ -110,7 +110,7 @@ class ShopItemsAdapter() :
             val shopItem = items[position]
             itemsInteractionListener?.onSwiped(shopItem)
 
-            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
+//            notifyDataSetChanged()  // FIXME: rebuild entire RecyclerView. Used only for debugging
 
 //            arrayList.remove(position)
 //            adapter.notifyDataSetChanged()
