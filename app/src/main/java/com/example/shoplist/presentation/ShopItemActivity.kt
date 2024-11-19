@@ -2,10 +2,10 @@ package com.example.shoplist.presentation
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.shoplist.data.RepositoryImpl
@@ -41,35 +41,22 @@ class ShopItemActivity : AppCompatActivity() {
 
         setupButtonSave()
 
+        initViews()
     }
 
-
     private fun setupButtonSave() {
-
-
         binding.buttonSave.setOnClickListener {
-            val name = parseName(binding.editTextName.text)
-            val count = parseCount(binding.editTextCount.text)
+            val nameEditable = binding.editTextName.text
+            val countEditable = binding.editTextCount.text
 
             if (mode == MODE_EDIT) {
-                viewModel.editItem(name, count)
+                viewModel.editItem(nameEditable, countEditable)
             } else { // mode == MODE_ADD
-                viewModel.addItem(name, count)
+                viewModel.addItem(nameEditable, countEditable)
             }
         }
     }
 
-    private fun parseName(nameEditable: Editable?): String {
-        return nameEditable.toString()
-    }
-
-    private fun parseCount(countEditable: Editable?): Int {
-        return countEditable.toString().toInt()
-    }
-
-//    private fun parseEditData(text: Editable?, text1: Editable?) {
-//        TODO("Not yet implemented")
-//    }
 
     private var mode: String = MODE_UNDEFINED
     private var itemId = ShopItem.UNDEFINED_ID
@@ -107,6 +94,39 @@ class ShopItemActivity : AppCompatActivity() {
                 editTextCount.setText(it.count.toString())
             }
         }
+
+        viewModel.finishEditLiveData.observe(this) {
+            onBackPressed()
+        }
+
+        viewModel.nameErrorLiveData.observe(this) {
+            if (it) {
+                binding.tilName.error = "Name error"
+            }
+        }
+
+        viewModel.countErrorLiveData.observe(this) {
+            if (it) {
+                binding.tilCount.error = "Count error"
+            }
+        }
+    }
+
+    private fun initViews() {
+//        addTextChangedListener - observes if text field is changed
+        with(binding){
+            editTextName.addTextChangedListener {
+                tilName.error = null
+            }
+
+            editTextCount.addTextChangedListener {
+                tilCount.error = null
+            }
+        }
+
+
+
+
     }
 
 }
