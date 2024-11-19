@@ -95,7 +95,12 @@ class ShopItemViewModel(
     }
 
     private fun parseEditData(nameEditable: Editable?, countEditable: Editable?): Boolean {
-        return parseName(nameEditable) && parseCount(countEditable)
+        var res = true
+
+        if (!parseName(nameEditable)) res = false
+        if (!parseCount(countEditable)) res = false
+
+        return  res
     }
 
 
