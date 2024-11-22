@@ -8,17 +8,16 @@ import com.example.shoplist.domain.usecases.AddItemUseCase
 import com.example.shoplist.domain.usecases.ChangeItemUseCase
 import com.example.shoplist.domain.usecases.GetItemsUseCase
 import com.example.shoplist.domain.usecases.RemoveItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class MainViewModel(
-    repository: Repository
-): ViewModel() {
-
-//    private val repository = RepositoryImpl
-
-    private val getItemUseCase = GetItemsUseCase(repository)
-    private val addItemUseCase = AddItemUseCase(repository)
-    private val removeItemUseCase = RemoveItemUseCase(repository)
-    private val changeItemUseCase = ChangeItemUseCase(repository)
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val getItemUseCase: GetItemsUseCase,
+    private val addItemUseCase: AddItemUseCase,
+    private val removeItemUseCase: RemoveItemUseCase,
+    private val changeItemUseCase: ChangeItemUseCase,
+) : ViewModel() {
 
     val itemsLiveData
         get() = getItemUseCase()

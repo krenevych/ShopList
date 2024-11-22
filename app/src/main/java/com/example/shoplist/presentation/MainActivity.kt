@@ -5,15 +5,14 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.shoplist.data.RepositoryImpl
 import com.example.shoplist.databinding.ActivityMainBinding
 import com.example.shoplist.domain.ShopItem
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val TAG = "XXXX"
 
@@ -22,16 +21,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    //    private val viewModel by viewModels<MainViewModel>()
-    private val viewModel by viewModels<MainViewModel> {
-        MainViewModelFactory()
-    }
-
-    class MainViewModelFactory : ViewModelProvider.Factory{
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return MainViewModel(RepositoryImpl) as T
-        }
-    }
+    private val viewModel by viewModels<MainViewModel>()
 
     private val shopItemsAdapter = ShopItemsAdapter()
 

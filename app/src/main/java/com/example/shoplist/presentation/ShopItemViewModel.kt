@@ -9,13 +9,16 @@ import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.usecases.AddItemUseCase
 import com.example.shoplist.domain.usecases.ChangeItemUseCase
 import com.example.shoplist.domain.usecases.GetItemUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class ShopItemViewModel(
-    repository: Repository
-): ViewModel() {
-    private val addItemUseCase = AddItemUseCase(repository)
-    private val changeItemUseCase = ChangeItemUseCase(repository)
-    private val getItemUseCase = GetItemUseCase(repository)
+@HiltViewModel
+class ShopItemViewModel @Inject constructor(
+    private val addItemUseCase: AddItemUseCase,
+    private val changeItemUseCase: ChangeItemUseCase,
+    private val getItemUseCase: GetItemUseCase,
+) : ViewModel() {
+
 
     private val _itemLiveData = MutableLiveData<ShopItem>()
     val itemLiveData: LiveData<ShopItem>
@@ -53,7 +56,7 @@ class ShopItemViewModel(
 
     fun editItem(
 //        name: String, count: Int
-        nameEditable: Editable?, countEditable: Editable?
+        nameEditable: Editable?, countEditable: Editable?,
     ) {
         if (parseEditData(nameEditable, countEditable)) {
             itemLiveData.value?.let { shopItem: ShopItem ->
@@ -65,7 +68,7 @@ class ShopItemViewModel(
     }
 
     private fun parseName(nameEditable: Editable?): Boolean {
-        if (nameEditable != null && nameEditable.toString() != ""){
+        if (nameEditable != null && nameEditable.toString() != "") {
             name = nameEditable.toString()
             return true
         } else {
@@ -75,16 +78,16 @@ class ShopItemViewModel(
     }
 
     private fun parseCount(countEditable: Editable?): Boolean {
-        if (countEditable != null){
+        if (countEditable != null) {
             try {
                 val _count = countEditable.toString().toInt()
-                if (_count > 0){
+                if (_count > 0) {
                     count = _count
                     return true
                 } else {
                     _countErrorLiveData.value = true
                 }
-            } catch (er: NumberFormatException){
+            } catch (er: NumberFormatException) {
                 _countErrorLiveData.value = true
             }
         } else {
@@ -100,11 +103,11 @@ class ShopItemViewModel(
         if (!parseName(nameEditable)) res = false
         if (!parseCount(countEditable)) res = false
 
-        return  res
+        return res
     }
 
 
-    private fun finishEditing(){
+    private fun finishEditing() {
         _finishEditLiveData.value = Unit
     }
 

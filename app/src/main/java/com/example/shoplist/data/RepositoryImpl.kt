@@ -6,7 +6,7 @@ import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
 
-object RepositoryImpl : Repository {
+class RepositoryImpl : Repository {
 
 //    private val items: MutableList<ShopItem> = mutableListOf()
 

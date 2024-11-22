@@ -6,12 +6,11 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.shoplist.data.RepositoryImpl
 import com.example.shoplist.databinding.ActivityEditShopItemBinding
 import com.example.shoplist.domain.ShopItem
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ShopItemActivity : AppCompatActivity() {
 
     private val TAG: String = "XXXX"
@@ -19,15 +18,7 @@ class ShopItemActivity : AppCompatActivity() {
         ActivityEditShopItemBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by viewModels<ShopItemViewModel> {
-        ShopItemViewModelFactory()
-    }
-
-    class ShopItemViewModelFactory : ViewModelProvider.Factory {
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return ShopItemViewModel(RepositoryImpl) as T
-        }
-    }
+    private val viewModel by viewModels<ShopItemViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
