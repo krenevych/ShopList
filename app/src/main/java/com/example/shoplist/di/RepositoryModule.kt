@@ -14,7 +14,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideRepository() : Repository{
-        return RepositoryImpl()
+    fun provideRepository(repository: RepositoryImpl) : Repository{
+        return repository
     }
 }

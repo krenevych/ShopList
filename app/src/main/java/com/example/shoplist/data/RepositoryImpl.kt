@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
+import javax.inject.Inject
 
-class RepositoryImpl : Repository {
+class RepositoryImpl @Inject constructor() : Repository {
 
 //    private val items: MutableList<ShopItem> = mutableListOf()
 
