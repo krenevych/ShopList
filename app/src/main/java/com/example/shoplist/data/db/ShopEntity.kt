@@ -9,9 +9,9 @@ import com.example.shoplist.domain.ShopItem.Companion.UNDEFINED_ID
 @Entity(tableName = "shop_item_table")
 data class ShopEntity (
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id_item")
-    var id: Int = UNDEFINED_ID,  // Унікальний ідентифікатор нашого елементу списку покупок
+    val id: Int,
 
     @ColumnInfo(name = "name_item")
     val name : String,

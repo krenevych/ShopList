@@ -66,6 +66,8 @@ class RepositoryImpl @Inject constructor() : Repository {
         addItem(item)
     }
 
-    private var current_id = 0
+    companion object {
+        private var current_id = 0
+    }
 
 }
