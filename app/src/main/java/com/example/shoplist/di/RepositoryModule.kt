@@ -1,5 +1,6 @@
 package com.example.shoplist.di
 
+import com.example.shoplist.data.RepositoryDataBase
 import com.example.shoplist.data.RepositoryImpl
 import com.example.shoplist.domain.Repository
 import dagger.Binds
@@ -23,5 +24,6 @@ interface RepositoryModule {
     // Якщо єдина мета - звʼязати інтерфейс з конкретною реалізацією, використовуємо анотацію @Binds
     @Binds
     @Singleton
-    fun provideRepository(repository: RepositoryImpl): Repository
+//    fun provideRepository(repository: RepositoryImpl): Repository
+    fun provideRepository(repository: RepositoryDataBase): Repository
 }

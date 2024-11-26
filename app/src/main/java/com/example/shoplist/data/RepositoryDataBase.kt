@@ -9,8 +9,10 @@ import com.example.shoplist.data.db.entitiesToItems
 import com.example.shoplist.data.db.toShopEntity
 import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 
-class RepositoryDataBase(context: Context) : Repository {
+class RepositoryDataBase @Inject constructor(@ApplicationContext context: Context) : Repository {
 
     private val dao = ShopItemsRoomDatabase.getDatabase(context).wordDao()
 
