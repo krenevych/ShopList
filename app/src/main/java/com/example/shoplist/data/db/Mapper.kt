@@ -16,3 +16,8 @@ fun ShopItem.toShopEntity() : ShopEntity {
 //    val shopEntity: ShopEntity = shopItem.toShopEntity()
 //    // some code
 //}
+
+//Converts List<ShopEntity> to List<ShopItem>
+fun entitiesToItems(entities: List<ShopEntity>) : List<ShopItem> {
+    TODO()
+}
