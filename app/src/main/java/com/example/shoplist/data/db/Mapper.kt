@@ -18,6 +18,13 @@ fun ShopItem.toShopEntity() : ShopEntity {
 //}
 
 //Converts List<ShopEntity> to List<ShopItem>
-fun entitiesToItems(entities: List<ShopEntity>) : List<ShopItem> {
-    TODO()
-}
+fun entitiesToItems(entities: List<ShopEntity>) = entities.map { it.toShopItem() } // functional approach
+
+//fun entitiesToItems(entities: List<ShopEntity>) : List<ShopItem> {
+//    val items = mutableListOf<ShopItem>()
+//    for (entity in entities) {
+//        val item =  entity.toShopItem()
+//        items.add(item)
+//    }
+//    return items
+//}

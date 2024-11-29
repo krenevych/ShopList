@@ -1,10 +1,10 @@
 package com.example.shoplist.data
 
-import ShopItemsRoomDatabase
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.shoplist.data.db.ShopEntity
+import com.example.shoplist.data.db.ShopItemsRoomDatabase
 import com.example.shoplist.data.db.entitiesToItems
 import com.example.shoplist.data.db.toShopEntity
 import com.example.shoplist.domain.Repository
@@ -19,11 +19,14 @@ class RepositoryDataBase @Inject constructor(@ApplicationContext context: Contex
     override val itemsLiveData: LiveData<List<ShopItem>>
         get() {
             val entityLiveData: LiveData<List<ShopEntity>> = dao.itemsLiveData()
-            return MediatorLiveData<List<ShopItem>>().apply {
-                addSource(entityLiveData) { entities  ->
-                    value = entitiesToItems(entities)  // converter from List<ShopEntity> to List<ShopItem>
-                }
+
+            val mediatorLiveData = MediatorLiveData<List<ShopItem>>()
+
+            mediatorLiveData.addSource(entityLiveData) { entities ->
+                mediatorLiveData.value = entitiesToItems(entities)  // converter from List<ShopEntity> to List<ShopItem>
             }
+
+            return mediatorLiveData
         }
 
     override fun getItem(id: Int): ShopItem {
