@@ -21,12 +21,14 @@ public abstract class ShopItemsRoomDatabase : RoomDatabase() {
             // if the INSTANCE is not null, then return it,
             // if it is, then create the database
             return INSTANCE ?: synchronized(this) {
-//                if (INSTANCE != null) return@synchronized INSTANCE!!
+                INSTANCE?.let { return it }  // if (INSTANCE != null) return@synchronized INSTANCE!!
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     ShopItemsRoomDatabase::class.java,
                     "shop_items_database"
-                ).build()
+                )
+                    .allowMainThreadQueries()
+                    .build()
                 INSTANCE = instance
                 // return instance
                 instance
