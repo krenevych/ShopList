@@ -49,6 +49,9 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
 
+    // to use viewModelScope for Coroutines
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
+
     // Hilt DI
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")

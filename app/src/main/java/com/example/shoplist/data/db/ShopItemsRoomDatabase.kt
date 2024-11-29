@@ -27,7 +27,7 @@ public abstract class ShopItemsRoomDatabase : RoomDatabase() {
                     ShopItemsRoomDatabase::class.java,
                     "shop_items_database"
                 )
-                    .allowMainThreadQueries()
+//                    .allowMainThreadQueries()  // allows request from DB in main thread
                     .build()
                 INSTANCE = instance
                 // return instance

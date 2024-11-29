@@ -19,26 +19,27 @@ class RepositoryImpl @Inject constructor() : Repository {
     override val itemsLiveData: LiveData<List<ShopItem>>
         get() = _itemsLiveData
 
-    override fun getItem(id: Int): ShopItem {
+    override suspend fun getItem(id: Int): ShopItem {
         return items.find {
             it.id == id
         } ?: throw IllegalStateException("Item $id isn't found")
     }
 
     init {
+        items.add(ShopItem(name = "Item_100", count = 40, id = current_id++, isActive = false))
         for (i in 1..4) {
-            addItem(ShopItem("Item_$i", i))
+            items.add(ShopItem(name = "Item_$i", count = i, id = current_id++))
         }
+        items.add(ShopItem(name = "Item_100", count = 40, id = current_id++, isActive = false))
 
-        addItem(ShopItem("Item_$100", 40, false))
-        addItem(ShopItem("Item_$100", 40, false))
+        update()
     }
 
     private fun update() {
         _itemsLiveData.value = items.toList()
     }
 
-    override fun addItem(item: ShopItem) {
+    override suspend fun addItem(item: ShopItem) {
         if (item.id == UNDEFINED_ID) {
             item.id = current_id++
         }
@@ -47,7 +48,7 @@ class RepositoryImpl @Inject constructor() : Repository {
         update()
     }
 
-    override fun removeItem(item: ShopItem) {
+    override suspend fun removeItem(item: ShopItem) {
         val itemToRemove = items.find {
             it.id == item.id
         }
@@ -56,7 +57,7 @@ class RepositoryImpl @Inject constructor() : Repository {
         update()
     }
 
-    override fun changeItem(item: ShopItem) {
+    override suspend fun changeItem(item: ShopItem) {
         val itemToChange = items.find {
             it.id == item.id
         }

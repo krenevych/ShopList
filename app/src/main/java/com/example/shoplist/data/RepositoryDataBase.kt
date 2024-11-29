@@ -29,19 +29,19 @@ class RepositoryDataBase @Inject constructor(@ApplicationContext context: Contex
             return mediatorLiveData
         }
 
-    override fun getItem(id: Int): ShopItem {
+    override suspend fun getItem(id: Int): ShopItem {
         return dao.getItem(id).toShopItem()
     }
 
-    override fun addItem(item: ShopItem) {
+    override suspend fun addItem(item: ShopItem) {
         dao.addItem(item.toShopEntity())
     }
 
-    override fun removeItem(item: ShopItem) {
+    override suspend fun removeItem(item: ShopItem) {
         dao.removeItem(item.toShopEntity())
     }
 
-    override fun changeItem(item: ShopItem) {
+    override suspend fun changeItem(item: ShopItem) {
         dao.changeItem(item.toShopEntity())
     }
 }

@@ -4,12 +4,14 @@ import android.text.Editable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.shoplist.domain.Repository
 import com.example.shoplist.domain.ShopItem
 import com.example.shoplist.domain.usecases.AddItemUseCase
 import com.example.shoplist.domain.usecases.ChangeItemUseCase
 import com.example.shoplist.domain.usecases.GetItemUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,8 +39,10 @@ class ShopItemViewModel @Inject constructor(
         get() = _finishEditLiveData
 
     fun getItem(id: Int) {
-        val shopItem = getItemUseCase(id)
-        _itemLiveData.value = shopItem
+        viewModelScope.launch {
+            val shopItem = getItemUseCase(id)
+            _itemLiveData.value = shopItem
+        }
     }
 
 
@@ -49,8 +53,10 @@ class ShopItemViewModel @Inject constructor(
         nameEditable: Editable?, countEditable: Editable?,
     ) {
         if (parseEditData(nameEditable, countEditable)) {
-            addItemUseCase(ShopItem(name = name, count = count))
-            finishEditing()
+            viewModelScope.launch {
+                addItemUseCase(ShopItem(name = name, count = count))
+                finishEditing()
+            }
         }
     }
 
@@ -60,9 +66,11 @@ class ShopItemViewModel @Inject constructor(
     ) {
         if (parseEditData(nameEditable, countEditable)) {
             itemLiveData.value?.let { shopItem: ShopItem ->
-                val copyShopItem = shopItem.copy(name = name, count = count)
-                changeItemUseCase(copyShopItem)
-                finishEditing()
+                viewModelScope.launch {
+                    val copyShopItem = shopItem.copy(name = name, count = count)
+                    changeItemUseCase(copyShopItem)
+                    finishEditing()
+                }
             }
         }
     }

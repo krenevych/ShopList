@@ -13,18 +13,18 @@ import androidx.room.Update
 interface DaoShopItem {
 
     @Query("SELECT * FROM shop_item_table ORDER BY id_item ASC")
-    fun itemsLiveData(): LiveData<List<ShopEntity>>
+    fun itemsLiveData(): LiveData<List<ShopEntity>>  // when function returns LiveData it has suspend-functionality under the hood.
 
     @Query("SELECT * FROM shop_item_table WHERE id_item LIKE :id LIMIT 1")
-    fun getItem(id: Int): ShopEntity
+    suspend fun getItem(id: Int): ShopEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addItem(item: ShopEntity)
+    suspend fun addItem(item: ShopEntity)
 
     @Delete
-    fun removeItem(item: ShopEntity)
+    suspend fun removeItem(item: ShopEntity)
 
     @Update
-    fun changeItem(item: ShopEntity)
+    suspend fun changeItem(item: ShopEntity)
 
 }

@@ -7,7 +7,7 @@ import javax.inject.Inject
 class ChangeItemUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    operator fun invoke(item: ShopItem) {
+    suspend operator fun invoke(item: ShopItem) {
         repository.changeItem(item)
     }
 }
