@@ -28,7 +28,27 @@ android {
                 "proguard-rules.pro"
             )
         }
+//        debug {
+//
+//        }
+
     }
+
+    flavorDimensions += "dataSource"
+
+    productFlavors {
+
+        create("dataBase") {
+            dimension = "dataSource"
+//            applicationIdSuffix = ".db"
+        }
+        create("dataList") {
+            dimension = "dataSource"
+            applicationIdSuffix = ".list"
+        }
+
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
